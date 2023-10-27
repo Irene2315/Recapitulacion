@@ -9,7 +9,10 @@
     <div id="contenedor"></div>
     <!--<script languaje="JavaScript" src="http://10.10.17.201/dwc/Juegos.js"></script>-->
     <script languaje="JavaScript" src="http://185.60.40.210//dwc/Juegos.js"></script>
-   <script>
+   <script languaje="JavaScript" >
+        function FilaColumna(f,c){
+            alert("Estas en la fila"+f+" y columna"+c+"")
+        }
         const contenedor= document.getElementById("contenedor")
         let htmlNumeros=""
         n=4
@@ -20,12 +23,12 @@
             htmlNumeros+="<tr>"
                 for(j=0;j<n;j++){
                     htmlNumeros+="<td>"
-                        htmlNumeros+=`<img src="Numeros/n${matriz[i][j]}.gif" id="${matriz[i][j]}">`
+                        htmlNumeros+=`<img onClick=FilaColumna(${i},${j}) src="Numeros/n${matriz[i][j]}.gif" id="${matriz[i][j]}">`
                         htmlNumeros+="</td>"
                 }
-            document.write("</tr>")
+                htmlNumeros+="</tr>"
         }
-        document.write("</table>")
+        htmlNumeros+="</table>"
         contenedor.innerHTML = htmlNumeros
     </script>
 </body>
