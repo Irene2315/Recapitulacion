@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="contenedor"></div>
+    <script>
+        const contenedor = document.getElementById("contenedor")
+        numeros = new Set()
+        let htmlNumeros=""
+        n=6;
+        while(numeros.size<n){
+            const numero = Math.floor(Math.random()*49) +1
+            numeros.add(numero)
+        }
+        for (numero of numeros){
+            htmlNumeros+=`<img src="Numeros/n${numero}.gif" id="${numero}">`
+        }
+        contenedor.innerHTML = htmlNumeros;
+    </script>
+</body>
+</html>
