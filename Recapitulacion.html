@@ -11,9 +11,15 @@
     <script languaje="JavaScript" src="http://185.60.40.210//dwc/Juegos.js"></script>
    <script languaje="JavaScript" >
         function FilaColumna(f,c){
-            //alert("Estas en la fila"+f+" y columna"+c+"")
             if(((f==(f0-1) || f==(f0+1))&& c0==c) || ((c==(c0-1) || c==(c0+1)) && f==f0)){
-                alert("Posible")
+                //alert("Posible")
+                //let a = 5; let b = 10; // Intercambiar valores usando destructuring
+                //[a, b] = [b, a];
+                var elementoPulsado = document.getElementById(`matriz${f + "" + c}`);
+                var elementoHueco = document.getElementById(`matriz${f0 + "" + c0}`);
+                [elementoPulsado.src, elementoHueco.src] = [elementoHueco.src, elementoPulsado.src];
+                f0=f
+                c0=c   
             }
             else{
                 alert("Imposible")
@@ -32,7 +38,8 @@
             htmlNumeros+="<tr>"
                 for(j=0;j<n;j++){
                         htmlNumeros+="<td>"
-                        htmlNumeros+=`<img onClick=FilaColumna(${i},${j}) src="Numeros/n${matriz[i][j]}.gif" id="${matriz[i][j]}">`
+                        htmlNumeros+=`<img onClick=FilaColumna(${i},${j}) src="Numeros/n${matriz[i][j]}.gif" id="matriz${i+""+j}">`
+                        
                         htmlNumeros+="</td>"
                 }
                 htmlNumeros+="</tr>"
