@@ -11,18 +11,27 @@
     <script languaje="JavaScript" src="http://185.60.40.210//dwc/Juegos.js"></script>
    <script languaje="JavaScript" >
         function FilaColumna(f,c){
-            alert("Estas en la fila"+f+" y columna"+c+"")
+            //alert("Estas en la fila"+f+" y columna"+c+"")
+            if(((f==(f0-1) || f==(f0+1))&& c0==c) || ((c==(c0-1) || c==(c0+1)) && f==f0)){
+                alert("Posible")
+            }
+            else{
+                alert("Imposible")
+            }
         }
         const contenedor= document.getElementById("contenedor")
         let htmlNumeros=""
-        n=4
+        const n=4
         let matriz=[];
         matriz=Aleatorio(n);
+        let f0=n-1;
+        let c0=n-1;
+
         htmlNumeros+="<table border='1'>"
         for(i=0;i<n;i++){
             htmlNumeros+="<tr>"
                 for(j=0;j<n;j++){
-                    htmlNumeros+="<td>"
+                        htmlNumeros+="<td>"
                         htmlNumeros+=`<img onClick=FilaColumna(${i},${j}) src="Numeros/n${matriz[i][j]}.gif" id="${matriz[i][j]}">`
                         htmlNumeros+="</td>"
                 }
