@@ -1,94 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <div id="contenedor"></div>
-    
+    <div id="contenedorIntentos"></div>
+    <div id="contenedorTiempo"></div>
     <!--<script languaje="JavaScript" src="http://10.10.17.201/dwc/Juegos.js"></script>-->
     <script languaje="JavaScript" src="http://185.60.40.210//dwc/Juegos.js"></script>
-   <script languaje="JavaScript" >
-        function FilaColumna(f,c){
-            
+    <script languaje="JavaScript">
+        function FilaColumna(f, c) {
+
             //alert("Estas en la fila"+f+" y columna"+c+"")
 
             //console.log("Elemento pulsado: en la fila"+f + ", y columna" + c)
             ///console.log("Elemento hueco: en la fila"+f0 + ", y columna" + c0)
 
-            if(((f==(f0-1) || f==(f0+1))&& c0==c) || ((c==(c0-1) || c==(c0+1)) && f==f0)){
-                
+            if (((f == (f0 - 1) || f == (f0 + 1)) && c0 == c) || ((c == (c0 - 1) || c == (c0 + 1)) && f == f0)) {
+                //alert("Posible")
+                //let a = 5; let b = 10; // Intercambiar valores usando destructuring
+                //[a, b] = [b, a];
+
                 var elementoPulsado = document.getElementById(`matriz${f + "" + c}`);
                 var elementoHueco = document.getElementById(`matriz${f0 + "" + c0}`);
+
                 [elementoPulsado.src, elementoHueco.src] = [elementoHueco.src, elementoPulsado.src]
+
                 matriz[f0][c0] = matriz[f][c] //el elemento pasa en la matriz a la nueva posicion
                 matriz[f][c] = 0 //la posicion actual tiene el valor 0
-                f0=f
-                c0=c 
-                const arrayActual =matriz.flat()                
-               /* const arrayActual =matriz.flat().sort((a, b) => {
-                if (a == 0) {
-                    return 1;
-                } else if (b == 0) {
-                    return -1;
-                } else {
-                    return a - b;
-                }
-                })*/
-                
-                if(Array.from({length:n*n-1},(_,i)=>i+1).join(",")+",0" ==arrayActual.flat()){
+
+                f0 = f
+                c0 = c
+
+
+                const arrayActual = matriz.flat()
+
+                if (Array.from({ length: n * n - 1 }, (_, i) => i + 1).join(",") + ",0" == arrayActual.flat()) {
                     setTimeout(() => {
                         alert("Enhorabuena")
                     }, 10)
-                    
-                    const images = document.getElementsByTagName('img');
+
+
+
                     for (let i = 0; i < images.length; i++) {
                         images[i].removeAttribute('onclick');
-                     }
+                    }
                 }
-              
+
+                numeroIntentos = numeroIntentos - 1
+                contenedorIntentos.innerHTML = numeroIntentos;
+
+                if (numeroIntentos == 0) {
+                    alert("El juego se ha acabado")
+                    for (let i = 0; i < images.length; i++) {
+                        images[i].removeAttribute('onclick');
+                    }
+                }
+                console.log(numeroIntentos)
+
             }
-            else{
-                
+            else {
+
                 alert("Imposible")
             }
-            
+
+
+
+
+
+
 
         }
-        const contenedor= document.getElementById("contenedor")
-        let htmlNumeros=""
-        const n=4
-        let matriz=[];
-        matriz=Aleatorio(n);
-        
-        let f0=n-1;
-        let c0=n-1;
+        const contenedor = document.getElementById("contenedor")
+        const contenedorIntentos = document.getElementById("contenedorIntentos")
+        const contenedorTiempo = document.getElementById("contenedorTiempo")
+        let htmlNumeros = ""
+        const n = 4
+        let matriz = [];
+        matriz = Aleatorio(n);
+        let f0 = n - 1;
+        let c0 = n - 1;
         let matrizOrdenada = matriz.map(row => [...row])
-        valorMenor=0;
-        htmlNumeros+="<table border='1'>"
-        for(i=0;i<n;i++){
+        valorMenor = 0;
+        let numeroIntentos = Math.pow(n, n) * 2
+        let tiempoResolverlo = 120 * n;
+        var i = 0;
+        const images = document.getElementsByTagName('img');
+
+
+        htmlNumeros += "<table border='1'>"
+        for (i = 0; i < n; i++) {
             const fila = []
-            htmlNumeros+="<tr>"
-                for(j=0;j<n;j++){
-                        htmlNumeros+="<td>"
-                        htmlNumeros+=`<img onClick=FilaColumna(${i},${j}) src="Numeros/n${matriz[i][j]}.gif" id="matriz${i+""+j}">`
-                        
-                        if(valorMenor<matrizOrdenada[i][j]){
-                            fila.push(matrizOrdenada[i][j])
-                        }
-                        else{
-                            fila.unshift(matrizOrdenada[i][j])
-                        }
-                        htmlNumeros+="</td>"
+            htmlNumeros += "<tr>"
+            for (j = 0; j < n; j++) {
+
+                htmlNumeros += "<td>"
+                htmlNumeros += `<img onClick=FilaColumna(${i},${j}) src="Numeros/n${matriz[i][j]}.gif" id="matriz${i + "" + j}">`
+
+                if (valorMenor < matrizOrdenada[i][j]) {
+                    fila.push(matrizOrdenada[i][j])
                 }
+                else {
+                    fila.unshift(matrizOrdenada[i][j])
+                }
+                htmlNumeros += "</td>"
+            }
             matrizOrdenada.push(fila)
-            htmlNumeros+="</tr>"
+            htmlNumeros += "</tr>"
         }
-        htmlNumeros+="</table>"
-        
+        htmlNumeros += "</table>"
+
+
         contenedor.innerHTML = htmlNumeros
+        contenedorIntentos.innerHTML = numeroIntentos
+        function reloj(tiempoResolverlo) {
+            let m = tiempoResolverlo % 60
+            let h = tiempoResolverlo / 60;
+            h = Math.floor(h);
+            return (h.toString().padStart(2, "0") + ":" + m.toString().padStart(2, "0"))
+        }
+
+        contenedorTiempo.innerHTML = reloj(tiempoResolverlo)
+
+        var reseteo = setInterval(() => {
+            tiempoResolverlo--;
+            contenedorTiempo.innerHTML = reloj(tiempoResolverlo)
+            if (tiempoResolverlo == 0) {
+                alert("Tiempo agotado")
+                for (let i = 0; i < images.length; i++) {
+                    images[i].removeAttribute('onclick');
+                }
+                clearInterval(reseteo);
+            }
+        }, 1000);
+
+        console.log(tiempoResolverlo)
+
+
+
     </script>
+
 </body>
+
 </html>
