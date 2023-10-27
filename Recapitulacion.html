@@ -11,40 +11,87 @@
     <script languaje="JavaScript" src="http://185.60.40.210//dwc/Juegos.js"></script>
    <script languaje="JavaScript" >
         function FilaColumna(f,c){
+
             if(((f==(f0-1) || f==(f0+1))&& c0==c) || ((c==(c0-1) || c==(c0+1)) && f==f0)){
-                //alert("Posible")
-                //let a = 5; let b = 10; // Intercambiar valores usando destructuring
-                //[a, b] = [b, a];
                 var elementoPulsado = document.getElementById(`matriz${f + "" + c}`);
                 var elementoHueco = document.getElementById(`matriz${f0 + "" + c0}`);
-                [elementoPulsado.src, elementoHueco.src] = [elementoHueco.src, elementoPulsado.src];
+                [elementoPulsado.src, elementoHueco.src] = [elementoHueco.src, elementoPulsado.src]
+                matriz[f0][c0] = matriz[f][c] //el elemento pasa en la matriz a la nueva posicion
+                matriz[f][c] = 0 //la posicion actual tiene el valor 0
                 f0=f
-                c0=c   
+                c0=c 
+                let matrizOrdenada = [...matriz]
+                const arrayOrdenado = matrizOrdenada.flat().sort((a, b) => {
+                if (a == 0) {
+                    return 1;
+                } else if (b == 0) {
+                    return -1;
+                } else {
+                    return a - b;
+                }
+                })
+                const arrayActual =matriz.flat()
+
+                /*const arrayActual= matrizOrdenada.flat().sort((a, b) => {
+                if (a == 0) {
+                    return 1;
+                } else if (b == 0) {
+                    return -1;
+                } else {
+                    return a - b;
+                }
+                })*/
+                
+                if((JSON.stringify(arrayOrdenado) === JSON.stringify(arrayActual))==true){
+                    setTimeout(() => {
+                        alert("Enhorabuena")
+                    }, 10)
+                    
+                    const images = document.getElementsByTagName('img');
+                    for (let i = 0; i < images.length; i++) {
+                        images[i].removeAttribute('onclick');
+                     }
+                }
+              
             }
             else{
+                
                 alert("Imposible")
             }
+            
+
         }
         const contenedor= document.getElementById("contenedor")
         let htmlNumeros=""
         const n=4
         let matriz=[];
         matriz=Aleatorio(n);
+        
         let f0=n-1;
         let c0=n-1;
-
+        let matrizOrdenada = matriz.map(row => [...row])
+        valorMenor=0;
         htmlNumeros+="<table border='1'>"
         for(i=0;i<n;i++){
+            const fila = []
             htmlNumeros+="<tr>"
                 for(j=0;j<n;j++){
                         htmlNumeros+="<td>"
                         htmlNumeros+=`<img onClick=FilaColumna(${i},${j}) src="Numeros/n${matriz[i][j]}.gif" id="matriz${i+""+j}">`
                         
+                        if(valorMenor<matrizOrdenada[i][j]){
+                            fila.push(matrizOrdenada[i][j])
+                        }
+                        else{
+                            fila.unshift(matrizOrdenada[i][j])
+                        }
                         htmlNumeros+="</td>"
                 }
-                htmlNumeros+="</tr>"
+            matrizOrdenada.push(fila)
+            htmlNumeros+="</tr>"
         }
         htmlNumeros+="</table>"
+        
         contenedor.innerHTML = htmlNumeros
     </script>
 </body>
