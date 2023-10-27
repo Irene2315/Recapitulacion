@@ -7,19 +7,26 @@
 </head>
 <body>
     <div id="contenedor"></div>
-    <script>
-        const contenedor = document.getElementById("contenedor")
-        numeros = new Set()
+    <!--<script languaje="JavaScript" src="http://10.10.17.201/dwc/Juegos.js"></script>-->
+    <script languaje="JavaScript" src="http://185.60.40.210//dwc/Juegos.js"></script>
+   <script>
+        const contenedor= document.getElementById("contenedor")
         let htmlNumeros=""
-        n=6;
-        while(numeros.size<n){
-            const numero = Math.floor(Math.random()*49) +1
-            numeros.add(numero)
+        n=4
+        let matriz=[];
+        matriz=Aleatorio(n);
+        htmlNumeros+="<table border='1'>"
+        for(i=0;i<n;i++){
+            htmlNumeros+="<tr>"
+                for(j=0;j<n;j++){
+                    htmlNumeros+="<td>"
+                        htmlNumeros+=`<img src="Numeros/n${matriz[i][j]}.gif" id="${matriz[i][j]}">`
+                        htmlNumeros+="</td>"
+                }
+            document.write("</tr>")
         }
-        for (numero of numeros){
-            htmlNumeros+=`<img src="Numeros/n${numero}.gif" id="${numero}">`
-        }
-        contenedor.innerHTML = htmlNumeros;
+        document.write("</table>")
+        contenedor.innerHTML = htmlNumeros
     </script>
 </body>
 </html>
